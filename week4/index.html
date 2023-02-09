@@ -1,0 +1,178 @@
+<html>
+  <head>
+    <style>
+      img {
+        width: 600px;
+        display: block;
+        margin: auto;
+        margin-bottom: 50px;
+      }
+      video {
+        width: 600px;
+        display: block;
+        margin: auto;
+        margin-bottom: 50px;
+      }
+      header {
+        text-align: center;
+        display: block;
+        margin: auto;
+        font-size: 36px;
+        margin-bottom: 50px;
+        margin-top: 150px;
+      }
+
+      header1 {
+        text-align: left;
+        display: block;
+        margin: auto;
+        font-size: 16px;
+        margin-bottom: 100px;
+        margin-left: 300px;
+        margin-right: 300px;
+      }
+
+      header2 {
+        text-align: center;
+        display: block;
+
+        font-size: 20px;
+        font-weight: 800;
+        margin-bottom: 200px;
+        margin-left: 300px;
+        margin-right: 300px;
+      }
+    </style>
+  </head>
+  <header> Caffeine Observation </header>
+  <body>
+    <header1> The project aims to detect changes in heart rate over a period of time, 
+        specifically before and after consuming coffee. The goal is to measure the heart rate in every hour, 
+        starting before coffee is consumed and continuing for several hours after, 
+        in order to observe the effects of caffeine on heart rate and determine when the body returns to its normal state.
+         This project will allow us to understand the impact 
+         of caffeine on heart rate and provide insight into how the body metabolizes caffeine. </header1>
+
+    <img src="title.JPG" alt="Picture 0 " width="600">
+     <header2> Arduino / Pulse Sensor / Adafruit IO / P5.js </header2>
+   
+
+    <img src="connectionP01.png" alt="Picture 1: Connection Point 1  Problem 1: " width="600">
+    <header1> #1 Problem: Take time to figure out how to connect from Arduino to Adafruit IO. 
+        Checked the WIFI setting, and the link of Adafruit IO is correct. </header1>
+
+    <img src="connectionP02.png" alt="Picture 2: Connection Point 2" width="600">
+    <header1> #2 Problem: The speed of sending the values from the pulse sensor 
+        to Adafruit IO is too fast. (For online setting, it is limited upto 1KB)
+    It needs to be slower.(delay() Function) </header1>
+
+    <img src="valuesInAdafruitIO.png"   alt="Picture 4: Values in Adafruit IO" width="600">
+    <img src="finger.JPG"   alt="Picture 7" width="600">
+    <header1> Received Data: The raw values-from 9:30am(02.02.2023) to 12:00pm(02.02.2023) I started to drink coffee at 9:30am to 10:00am </header1>
+
+    <img src="p5js.result.jpg" alt="Picture 3: Result of P5.js Sketch" width="600">
+    <header1> The values from pulse sensor are divided by colors.from Lowest values(blue) to highest(Dark Red), it shows the progress how long the body takes time to metabolic caffeine.
+         It shows the caffeine hits the level of raw heartbeating to get higher, then it turns to greenish colors after few hours. </header1>
+    
+     <img src="caicode.png" alt="Picture 5" width="600">
+    <header1> Adjust to Arduino code to make raw heartbeating to BPM. @Cai </header1>
+
+    <img src="sleeping.png" alt="Picture 6" width="600">
+    <img src="bed.JPG"   alt="Picture 8" width="600">
+     <header1> Test and observe my BPM during sleeping. And, set the levels of BPM more(aqua, green, yellow, orange, red, dark red)+ white(The value is too low or too high= wrong)  </header1>
+ 
+     <img src="coffeeaffect.png" alt="Picture 6" width="600">
+    <header1> After sleeping, I start to drink coffee(Ice Latte) at 9:10am. The lines of colors at the top, turns to redish = caffeine affects my BPM.
+        Also, remove the stroke to see the colors fluently. </header1>
+
+
+     <video width="600" controls>
+         <source src="https://youtu.be/VasGuJzvxBI" type="video/mp4">
+     </video>
+     <header1> From aqua to dark red colors, I divided the steps of level of BPM to show the changes fluently. 
+        I recorded 10min of the changes in p5.js and made its speed x10.  </header1>
+        <div>
+            <canvas id="myCanvas" width="400" height="400"></canvas>
+          </div>
+          <script>
+            let numRecords = 1000
+            let dataURL = "https://io.adafruit.com/api/v2/sunnyk6023/feeds/pulse-feed/data?limit=" + numRecords + "&include=value"
+        
+            let myHue = 0
+            let myElements = []
+
+            function preload(){
+ fetchData()
+}
+
+function setup() {
+  createCanvas(400, 400);
+
+  
+  setInterval(fetchData, 5000)
+}
+
+function draw() {
+  
+  noStroke()
+  background(255);
+  if(myElements.length > 0){
+    let i = 0
+    let step = 12
+    let columns = Math.floor(width/step)
+    let rows = Math.floor(height/step)
+    let totalElements = Math.min(myElements.length, columns * rows)
+    for(let y = 0; y < rows; y++){
+      for(let x = 0; x < columns; x++){
+        let element = myElements[i++]
+        if(element){
+  if (element.value > 110 && element.value < 155) {
+    fill(100, 20, 20)
+  } else if (element.value > 95 && element.value < 110) {
+    fill(255, 10, 0)
+  } else if (element.value > 85 && element.value < 95) {
+    fill(250, 150, 0)
+  } else if (element.value > 75 && element.value < 85) {
+    fill(240, 220, 0)
+  } else if (element.value > 60 && element.value < 75) {
+    fill(120, 200, 0)
+  } else if (element.value > 45 && element.value < 60) {
+    fill(0, 200, 160)
+  } 
+    else {
+    fill(255)
+  }
+
+          rect(x * step, y * step, step, step)
+        } else {
+          break;
+        }
+      }
+    }
+  }
+}
+
+function fetchData(){
+   loadJSON(dataURL, handleData, handleError);
+}
+
+
+function handleData(result){
+  console.info(result)
+  myElements = []
+  result.forEach((dataPoint)=>{
+    console.log(dataPoint)
+    myElements.push({value: dataPoint.value})
+  })
+}
+
+function handleError(err){
+  console.error(err)
+  
+}
+            </script>
+        
+  </body>
+</html>
+
+
