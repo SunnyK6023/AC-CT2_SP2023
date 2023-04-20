@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <style>
+      img {
+        width: 600px;
+        display: block;
+        margin: auto;
+        margin-bottom: 50px;
+      }
+      video {
+        width: 600px;
+        display: block;
+        margin: auto;
+        margin-bottom: 50px;
+      }
+      header {
+        text-align: center;
+        display: block;
+        margin: auto;
+        font-size: 36px;
+        margin-bottom: 50px;
+        margin-top: 150px;
+      }
+
+      header1 {
+        text-align: left;
+        display: block;
+        margin: auto;
+        font-size: 16px;
+        margin-bottom: 100px;
+        margin-left: 300px;
+        margin-right: 300px;
+      }
+
+      header2 {
+        text-align: center;
+        display: block;
+
+        font-size: 20px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        margin-left: 300px;
+        margin-right: 300px;
+      }
+
+     iframe {
+        text-align: center;
+        display: block;
+
+        font-size: 20px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        margin-left: 300px;
+        margin-right: 300px;
+      }
+    </style>
+  </head>
+  <header> Unity Game with Arduino Controller </header>
+  <body>
+    <header1> I want to create a Unity world with a beautiful lake landscape and fireworks that 
+        launch from the water. The scene should be visually impressive and immersive. 
+        Additionally, I plan to add a button function so that users can turn 
+        the fireworks on and off at their discretion. </header1>
+
+    <img src="Screenshot.png" alt="Escape and Run away!" width="600">
+     <header2> Unity Game: Escape and Run away!</header2>
+   
+
+    <img src="MapData.png" alt="Problem 1" width="600">
+    <header2>Problem 1</header2>
+    <header1> In Arduino, raw data is received through the force and joystick sensors, 
+        but this data may not be suitable as a controller for a Unity game.
+         To make the data usable, the "map" function can be used to adjust the values to fit within the game's system. </header1>
+
+    <img src="TryIfCatch.png" alt="Problem 2" width="600">
+    <header2>Problem 2</header2>
+    <header1> One of the major problems I encountered in this project was that 
+        my new MacBook Pro did not have the same Arduino port as my previous one. 
+        This caused issues with receiving data from various sources. To address this problem, 
+        I used the "Try if catch" command to select the correct data from the Arduino and transmit it to Unity. </header1>
+
+    <img src="SettingForCar.png"   alt="Problem 3 " width="600">
+    <header2>Problem 3</header2>
+    <header1> I got a free 3D model of a car that I wanted to use in my project, 
+        but I needed to add scripts and a rigidbody to make it work properly. 
+        It took me some time to determine which 3D object was the main one to control the entire car. 
+        Eventually, I added a rigidbody component to each 3D object and added the necessary
+         scripts to the car body to achieve the desired functionality. </header1>
+
+ <img src="ChangeTheForce.png"   alt="Learning 1" width="600">
+ <header2>Learning 1</header2>
+     <header1> While playing the game, I noticed that the force and angle of 
+        the car were insufficient for effective control and evasion of the enemy. 
+        To improve the gameplay, I modified the settings for the force and angle in Unity scripts. 
+        This was a straightforward way to make the necessary adjustments. </header1>
+
+  <img src="EnemyFollow.png"   alt="Learning 2" width="600">
+  <header2>Learning 2</header2>
+         <header1> I added an enemy horse to the game that would follow the player car and
+             block their escape route on the map. While implementing this feature in Unity,
+              I found that the script designed for pets was suitable for controlling the enemy horse's behavior. </header1>
+
+ <img src="ArduinoSet.JPG"   alt="Learning 3" width="600">
+ <header2>Learning 3</header2>
+      <header1> Arduino has been set up so that the joystick sensor controls the x-axis movement of the player's car, while the force sensor controls the speed.</header1>
+
+              <iframe width="600" height="400" src="https://www.youtube.com/embed/TWoM3Qb7aK4" frameborder="0" allowfullscreen></iframe>
+              <header2>Playing Video</header2>
+    <header1> This is the final video showcasing the game being played with an Arduino controller. </header1>
+
+            
+          
+    </body>
